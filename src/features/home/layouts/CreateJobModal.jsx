@@ -1,6 +1,6 @@
 import { FiX } from "react-icons/fi";
-import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
+
+import Button from "../../../components/ui/button.jsx";
 
 const CreateJobModal = ({
     show,
@@ -126,12 +126,15 @@ const CreateJobModal = ({
                         </select>
                     </div>
 
-                    <button
+
+                    <Button
+                        variant="primary"
+                        size="xl"
+                        fullWidth
                         type="submit"
-                        className="w-full py-3 bg-yellow-400 text-white font-bold rounded-lg btn-azul"
-                    >
+                        >
                         Publicar
-                    </button>
+                    </Button>
                 </form>
             </div>
         </div>

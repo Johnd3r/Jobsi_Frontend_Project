@@ -2,6 +2,8 @@ import { FiUser } from "react-icons/fi";
 import { TbDoorExit } from "react-icons/tb";
 import Swal from "sweetalert2";
 
+import Button from "../../../components/ui/button.jsx";
+
 const JobPostuladoCard = ({ job, onAbandoned }) => {
 
     const handleAbandonarClick = async () => {
@@ -49,12 +51,14 @@ const JobPostuladoCard = ({ job, onAbandoned }) => {
 
             {/* Botón de abandonar */}
             <div className="flex gap-4 mt-4">
-                <button className="px-6 py-2 !bg-red-500 text-white font-semibold rounded-full flex items-center gap-2"
-                type="button"
-                onClick={handleAbandonarClick}
-                    >                     
-                    <TbDoorExit /> Abandonar
-                </button>
+                <Button
+                    variant="danger"
+                    size="md"
+                    className="rounded-full"
+                    onClick={handleAbandonarClick}
+                >
+                    <TbDoorExit className="mr-2" /> Abandonar
+                </Button>
             </div>
         </div>
     );

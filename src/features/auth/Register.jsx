@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useRegister } from "../auth/hooks/useRegister.js";
+
 import RegisterForm from "../auth/components/RegisterForm.jsx";
+import Button from "../../components/ui/button.jsx";
 
 
 function Register() {
@@ -50,14 +52,14 @@ return (
             </div>
 
             {/* Footer del panel (botón) */}
-            <div className="mt-auto flex items-center justify-between pt-6">
-                <button
-                    type="button"
+            <div>
+                <Button
+                    variant="primary"
+                    size="sm"
                     onClick={() => navigate("/login")}
-                    className="btn-azul text-white py-2 px-6 rounded-lg transition"
-                >
+                    >
                     Volver
-                </button>
+                </Button>
             </div>
             
             {/* Línea inferior azul */}

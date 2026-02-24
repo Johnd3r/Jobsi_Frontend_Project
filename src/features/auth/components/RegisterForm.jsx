@@ -1,5 +1,7 @@
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
+import Button from "../../../components/ui/button.jsx";
+
 const RegisterForm = ({
     handleSubmit,
 
@@ -194,12 +196,13 @@ const RegisterForm = ({
 
             {/* Botón */}
             <div className="pt-2">
-                <button
+                <Button
                     type="submit"
-                    className="btn-azul w-full sm:w-auto text-white py-2 px-6 rounded-lg transition"
-                >
+                    variant="primary"
+                    size="sm"
+                    >
                     Crear cuenta
-                </button>
+                </Button>
             </div>
         </form>
     );

@@ -4,6 +4,9 @@ import { useAuth } from "/src/context/AuthContext.jsx";
 
 import Swal from "sweetalert2";
 
+import Button from "../../components/ui/button.jsx";
+
+
 const JobCard = ({ job, onTomar }) => {
     const { user, token } = useAuth();
 
@@ -105,20 +108,15 @@ const JobCard = ({ job, onTomar }) => {
                 <p className="font-bold text-black">{job.estado}</p>
             </div>
             
-            {/* Botón de tomar Job */}
-            <button 
-            type="button"
-            disabled={isDisabled}
-            onClick={handleTomarJob}
-            className={`mt-4 w-full py-2 rounded-lg font-semibold transition
-                        ${
-                            isDisabled
-                                ? "bg-gray-400 cursor-not-allowed text-white"
-                                : "bg-[#1e3a8a] hover:bg-[#142a61] text-white"
-                        }
-                    `}>
+            <Button
+                variant={isDisabled ? "dark": "primary"}
+                size="md"
+                fullWidth
+                onClick={handleTomarJob}
+                className={`mt-4 ${isDisabled ? "!cursor-not-allowed" : ""}`}
+            >
                 {buttonText}
-            </button>
+            </Button>
         </div>
     );
 };
