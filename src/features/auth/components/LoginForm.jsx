@@ -1,6 +1,8 @@
 import { FiEye, FiEyeOff } from "react-icons/fi"; // react-icons
 import { useNavigate } from "react-router-dom";
 
+import Button from "../../../components/ui/button.jsx";
+
 const LoginForm = ({
     email,
     setEmail,
@@ -9,6 +11,7 @@ const LoginForm = ({
     showPassword,
     setShowPassword,
     onSubmit,
+    errors = {}
     }) => {
 
     const navigate = useNavigate();
@@ -25,7 +28,9 @@ const LoginForm = ({
                     placeholder="Ingresa tu correo universitario"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full p-2 border-2 border-[#6b7280] rounded-lg focus:ring-2 focus:ring-blue-500 text-black md:text-xl"
+                    className={`w-full p-2 border-2 rounded-lg text-black ${
+                        errors.email ? "border-red-500" : "border-gray-500"
+                    }`}
                     />
                 </div>
                 <div className="relative">
@@ -38,7 +43,8 @@ const LoginForm = ({
                     placeholder="Ingresa tu contraseña"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full p-2 pr-12 border-2 border-[#6b7280] rounded-lg focus:ring-2 focus:ring-blue-500 text-black md:text-xl"
+                    className={`w-full p-2 border-2 rounded-lg text-black 
+                                ${ errors.password ? "border-red-500" : "border-[#6b7280]"}`}
                     />
 
                     {/* Ícono del ojito */}
@@ -60,20 +66,21 @@ const LoginForm = ({
                 </h2>
 
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                    <button
-                        type="button"
+                    <Button
+                        variant="primary"
+                        fullWidth
                         onClick={() => navigate("/register")}
-                        className="w-full sm:w-1/2 btn-azul text-white py-2 rounded-lg transition"
                     >
                         Crear cuenta
-                    </button>
+                    </Button>
 
-                    <button
+                    <Button
+                        variant="warning"
+                        fullWidth
                         type="submit"
-                        className="w-full sm:w-1/2 btn-amarillo text-black py-2 rounded-lg transition"
                     >
                         Entrar
-                    </button>
+                    </Button>
                 </div>
 
             </form>

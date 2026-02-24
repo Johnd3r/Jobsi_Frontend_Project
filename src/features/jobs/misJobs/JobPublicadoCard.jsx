@@ -1,6 +1,8 @@
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Swal from "sweetalert2";
 
+import Button from "../../../components/ui/button.jsx";
+
 const JobPublicadoCard = ({ job, onDelete }) => {
 
     const handleDeleteClick = async () => {
@@ -46,20 +48,24 @@ const JobPublicadoCard = ({ job, onDelete }) => {
 
             {/* Botones */}
             <div className="flex gap-4 mt-4">
-                <button className="px-6 py-2 btn-amarillo text-black font-semibold rounded-full flex items-center gap-2"
-                type="button"
-               /*  onClick={} */ >
-                    <FiEdit className="text-black-600" />Editar
-                </button>
+                <Button
+                    variant="warning"
+                    size="md"
+                    className="rounded-full"
+                >
+                    <FiEdit className="mr-2" /> Editar
+                </Button>
 
-                <button className="px-6 py-2 bg-[#0a0f1a] text-white font-semibold rounded-full flex items-center gap-2"
-                type="button"
-                onClick={handleDeleteClick}
-                    >                     
-                    <FiTrash2 /> Eliminar
-                </button>
+                <Button
+                    variant="dark"
+                    size="md"
+                    className="rounded-full"
+                    onClick={handleDeleteClick}
+                >
+                    <FiTrash2 className="mr-2" /> Eliminar
+                </Button>
             </div>
-        </div>
+        </div>  
     );
 };
 
