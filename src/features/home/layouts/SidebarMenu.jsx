@@ -1,4 +1,4 @@
-import { FiX, FiUser, FiSettings, FiHelpCircle, FiLogOut, FiBriefcase } from "react-icons/fi";
+import { FiX, FiSettings, FiHelpCircle, FiLogOut, FiBriefcase } from "react-icons/fi";
 import { useAuth } from "../../../context/AuthContext";
 import Swal from "sweetalert2";
 
