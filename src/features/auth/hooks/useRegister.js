@@ -9,6 +9,8 @@ export const useRegister = (navigate) => {
 
 const { login } = useAuth();
 
+const [errors, setErrors] = useState({})
+
 const [nombre, setNombre] = useState("");
 const [primerApellido, setPrimerApellido] = useState("");
 const [segundoApellido, setSegundoApellido] = useState("");
@@ -28,20 +30,30 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validación básica
-    if (
-    !nombre.trim() || !primerApellido.trim() || !email.trim() ||
-    !cedula.trim() || !celular.trim() || !sexo.trim() ||
-    !fechaNacimiento.trim() || !password.trim() || !confirmPassword.trim()
-    ) {
-    Swal.fire({
-        icon: "warning",
-        title: "Campos incompletos",
-        text: "Por favor completa todos los campos del formulario.",
-        confirmButtonColor: "#1e3a8a",
-    });
-    return;
-    }
+    // En la validación:
+    const newErrors = {};
+        if (!nombre.trim()) newErrors.nombre = true;
+        if (!primerApellido.trim()) newErrors.primerApellido = true;
+        if (!segundoApellido.trim()) newErrors.segundoApellido = true;
+        if (!email.trim()) newErrors.email = true;
+        if (!cedula.trim()) newErrors.cedula = true;
+        if (!celular.trim()) newErrors.celular = true;
+        if (!fechaNacimiento.trim()) newErrors.fechaNacimiento = true;
+        if (!password.trim()) newErrors.password = true;
+        if (!confirmPassword.trim()) newErrors.confirmPassword = true;
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            Swal.fire({
+                icon: "warning",
+                title: "Campos incompletos",
+                text: "Por favor completa todos los campos del formulario.",
+                confirmButtonColor: "#1e3a8a",
+            });
+            return;
+        }
+
+setErrors({}); // limpia si todo ok
 
     if (password !== confirmPassword) {
     setPasswordError("Las contraseñas no coinciden.");
@@ -101,7 +113,7 @@ const handleSubmit = async (e) => {
         // Estados
         nombre, primerApellido, segundoApellido, email, cedula, celular,
         sexo, fechaNacimiento, password, confirmPassword,
-        showPassword, showConfirmPassword, passwordError,
+        showPassword, showConfirmPassword, passwordError, errors,
 
         // Setters
         setNombre, setPrimerApellido, setSegundoApellido, setEmail, setCedula,

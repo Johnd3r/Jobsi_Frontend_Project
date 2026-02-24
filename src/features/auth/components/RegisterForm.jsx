@@ -14,7 +14,7 @@ const RegisterForm = ({
 
     password, setPassword,
     confirmPassword, setConfirmPassword,
-    passwordError,
+    passwordError, errors,
 
     showPassword, setShowPassword,
     showConfirmPassword, setShowConfirmPassword
@@ -40,7 +40,8 @@ const RegisterForm = ({
                             placeholder="Ingresa tu nombre"
                             value={nombre}
                             onChange={(e) => setNombre(e.target.value)}
-                            className="w-full p-2 border-2 border-[#6b7280] rounded-lg text-black"
+                            className={`w-full p-2 border-2 rounded-lg text-black 
+                                ${ errors.nombre ? "border-red-500" : "border-[#6b7280]"}`}
                         />
                     </div>
 
@@ -52,7 +53,8 @@ const RegisterForm = ({
                         placeholder="Ingresa tu primer apellido"
                         value={primerApellido}
                         onChange={(e) => setPrimerApellido(e.target.value)}
-                        className="w-full p-2 border-2 border-[#6b7280] rounded-lg text-black"
+                        className={`w-full p-2 border-2 rounded-lg text-black 
+                                ${ errors.primerApellido ? "border-red-500" : "border-[#6b7280]"}`}
                         />
                     </div>
 
@@ -64,7 +66,8 @@ const RegisterForm = ({
                             placeholder="Ingresa tu segundo apellido"
                             value={segundoApellido}
                             onChange={(e) => setSegundoApellido(e.target.value)}
-                            className="w-full p-2 border-2 border-[#6b7280] rounded-lg text-black"
+                            className={`w-full p-2 border-2 rounded-lg text-black 
+                                ${ errors.segundoApellido ? "border-red-500" : "border-[#6b7280]"}`}
                         />
                     </div>
 
@@ -76,7 +79,8 @@ const RegisterForm = ({
                             placeholder="Ingresa tu correo universitario"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full p-2 border-2 border-[#6b7280] rounded-lg text-black"
+                            className={`w-full p-2 border-2 rounded-lg text-black 
+                                ${ errors.email ? "border-red-500" : "border-[#6b7280]"}`}
                         />
                     </div>
                 </div>
@@ -91,7 +95,8 @@ const RegisterForm = ({
                         placeholder="Ingresa tu cédula"
                         value={cedula}
                         onChange={(e) => setCedula(e.target.value)}
-                        className="w-full p-2 border-2 border-[#6b7280] rounded-lg text-black"
+                        className={`w-full p-2 border-2 rounded-lg text-black 
+                                ${ errors.cedula ? "border-red-500" : "border-[#6b7280]"}`}
                         />
                     </div>
 
@@ -103,7 +108,8 @@ const RegisterForm = ({
                         placeholder="Ingresa tu celular"
                         value={celular}
                         onChange={(e) => setCelular(e.target.value)}
-                        className="w-full p-2 border-2 border-[#6b7280] rounded-lg text-black"
+                        className={`w-full p-2 border-2 rounded-lg text-black 
+                                ${ errors.celular ? "border-red-500" : "border-[#6b7280]"}`}
                         />
                     </div>
 
@@ -129,7 +135,8 @@ const RegisterForm = ({
                         type="date"
                         value={fechaNacimiento}
                         onChange={(e) => setFechaNacimiento(e.target.value)}
-                        className="w-full p-2 border-2 border-[#6b7280] rounded-lg text-black"
+                        className={`w-full p-2 border-2 rounded-lg text-black 
+                                ${ errors.fechaNacimiento ? "border-red-500" : "border-[#6b7280]"}`}
                         />
                     </div>
                 </div>
@@ -141,7 +148,9 @@ const RegisterForm = ({
                 <div className="flex flex-col">
                     <label className="block text-sm sm:text-base font-bold text-black">Contraseña</label>
 
-                    <div className="flex items-center border-2 border-[#6b7280] rounded-lg px-2">
+                    <div className={`flex items-center border-2 rounded-lg px-2 ${
+                            errors.password ? "border-red-500" : "border-[#6b7280]"
+                        }`}>
                         <input
                         type={showPassword ? "text" : "password"}
                         value={password}
@@ -164,11 +173,9 @@ const RegisterForm = ({
                 <div className="flex flex-col">
                     <label className="block text-sm sm:text-base font-bold text-black">Confirmar contraseña</label>
 
-                    <div
-                        className={`flex items-center border-2 rounded-lg px-2 ${
-                        passwordError ? "border-red-500" : "border-[#6b7280]"
-                        }`}
-                    >
+                    <div className={`flex items-center border-2 rounded-lg px-2 ${
+                            errors.confirmPassword ? "border-red-500" : "border-[#6b7280]"
+                        }`}>
                         <input
                         type={showConfirmPassword ? "text" : "password"}
                         value={confirmPassword}

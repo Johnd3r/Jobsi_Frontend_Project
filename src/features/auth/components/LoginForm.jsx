@@ -9,6 +9,7 @@ const LoginForm = ({
     showPassword,
     setShowPassword,
     onSubmit,
+    errors = {}
     }) => {
 
     const navigate = useNavigate();
@@ -25,7 +26,9 @@ const LoginForm = ({
                     placeholder="Ingresa tu correo universitario"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full p-2 border-2 border-[#6b7280] rounded-lg focus:ring-2 focus:ring-blue-500 text-black md:text-xl"
+                    className={`w-full p-2 border-2 rounded-lg text-black ${
+                        errors.email ? "border-red-500" : "border-gray-500"
+                    }`}
                     />
                 </div>
                 <div className="relative">
@@ -38,7 +41,8 @@ const LoginForm = ({
                     placeholder="Ingresa tu contraseña"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full p-2 pr-12 border-2 border-[#6b7280] rounded-lg focus:ring-2 focus:ring-blue-500 text-black md:text-xl"
+                    className={`w-full p-2 border-2 rounded-lg text-black 
+                                ${ errors.password ? "border-red-500" : "border-[#6b7280]"}`}
                     />
 
                     {/* Ícono del ojito */}

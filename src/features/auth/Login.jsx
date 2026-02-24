@@ -14,9 +14,26 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState({});
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
+
+    const newErrors = {};
+    if (!email.trim()) newErrors.email = true;
+    if (!password.trim()) newErrors.password = true;
+
+    if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        Swal.fire({
+            icon: "warning",
+            title: "Campos incompletos",
+            text: "Por favor completa todos los campos en rojo del formulario.",
+            confirmButtonColor: "#1e3a8a",
+        });
+        return;
+    }
+    setErrors({}); // limpia si todo ok
 
         try {
             await login(email, password);
@@ -40,7 +57,6 @@ const Login = () => {
             });
         }
     };
-
     return (
         <>
         <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2">
@@ -82,7 +98,7 @@ const Login = () => {
 
 
                         {/* Círculo amarillo */}
-                    |   <span className="hidden lg:flex absolute -top-35 w-35 h-35 bg-[#fbbf24] rounded-full  items-center justify-center lg:md:flex absolute -top-40 w-35 h-35 ">
+                        <span className="hidden lg:flex absolute -top-35 w-35 h-35 bg-[#fbbf24] rounded-full  items-center justify-center lg:md:flex absolute -top-40 w-35 h-35 ">
                             <img
                             src="/src/assets/jobsi_graduation_logo.png"
                             alt="Logo Jobsi"
@@ -103,6 +119,7 @@ const Login = () => {
                         showPassword={showPassword}
                         setShowPassword={setShowPassword}
                         onSubmit={handleSubmit}
+                        errors={errors}
                     />
 
                     <p className="mt-4 text-sm md:text-base text-center text-gray-600">
