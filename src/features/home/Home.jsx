@@ -1,10 +1,12 @@
 import { useAuth } from "/src/context/AuthContext.jsx";
+import { useCreateJob } from "./hooks/useCreateJob";
 
 import JobCard from "/src/features/home/JobCard.jsx";
 import CreateJobModal from "/src/features/home/layouts/CreateJobModal.jsx";
-import { useCreateJob } from "./hooks/useCreateJob";
 import JobCardSkeleton from "../../components/loaders/JobCardSkeleton.jsx";
 import Header from "../../components/layout/header.jsx";
+import Button from "../../components/ui/button.jsx";
+
 
 
 const Home = () => {
@@ -45,12 +47,12 @@ return (
                 ¡Parchate y adéntrate en el lugar para generar ingresos en tus tiempos libres!
             </h3>
 
-            <button
-                type="button"
-                className="w-full sm:w-auto max-w-[420px] h-12 sm:h-14 btn-amarillo text-black text-lg sm:text-xl transition px-8"
-            >
+            <Button
+                variant="warning"
+                size="xl"
+                >
                 ¡Explora los Jobs Ahora!
-            </button>
+            </Button>
 
         </div>
     </div>
@@ -142,13 +144,13 @@ return (
                             sube un Job
                         </h1>
 
-                        <button
-                            type="button"
+                        <Button
+                            variant="warning"
+                            size="xl"
                             onClick={openModal}
-                            className="w-full sm:w-auto max-w-[320px] h-14 btn-amarillo text-black text-xl"
-                        >
+                            >
                             Publícalo
-                        </button>
+                        </Button>
                     </div>
                 </div> {/*Fin de CTA publicar Job */}
 

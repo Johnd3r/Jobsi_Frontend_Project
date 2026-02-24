@@ -8,6 +8,7 @@ import { useVerMisJobs } from "./hooks/useVerMisJobs";
 import JobPublicadoSkeleton from "../../components/loaders/JobPublicadoSkeleton";
 import JobPostuladoSkeleton from "../../components/loaders/JobPostuladoSkeleton";
 import Header from "../../components/layout/header.jsx";
+import Button from "../../components/ui/button.jsx";
 
 const VerMisJobs = () => {
     
@@ -119,12 +120,13 @@ return (
                 </div>
             </div>
 
-            <button className="w-full sm:w-[150px] lg:w-[175px] h-10 rounded-lg bg-[#4468cf] text-white font-medium transition hover:bg-[#3659b5]"
-                type="button"
+            <Button
+                variant="secondary"
+                size="sm"
                 onClick={() => navigate("/home")}
                 >
-                    Volver
-            </button>
+                Volver
+            </Button>
             
         </div> {/* Fin apartado de los Jobs */}
         
