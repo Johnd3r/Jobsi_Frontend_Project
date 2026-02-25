@@ -126,7 +126,6 @@ const CreateJobModal = ({
                         </select>
                     </div>
 
-
                     <Button
                         variant="primary"
                         size="xl"
