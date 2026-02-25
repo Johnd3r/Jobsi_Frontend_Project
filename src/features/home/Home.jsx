@@ -1,15 +1,22 @@
 import { useAuth } from "/src/context/AuthContext.jsx";
 import { useCreateJob } from "./hooks/useCreateJob";
+import { useNavigate } from "react-router-dom";
+
+import { IoExtensionPuzzleSharp } from "react-icons/io5";
 
 import JobCard from "/src/features/home/JobCard.jsx";
 import CreateJobModal from "/src/features/home/layouts/CreateJobModal.jsx";
 import JobCardSkeleton from "../../components/loaders/JobCardSkeleton.jsx";
-import Header from "../../components/layout/header.jsx";
-import Button from "../../components/ui/button.jsx";
 
+import Header from "../../components/layout/header.jsx";
+import Button from "../../components/ui/Button.jsx";
+import EmptyState from "../../components/ui/states/EmptyState.jsx";
 
 
 const Home = () => {
+
+    const navigate = useNavigate();
+    
     const { user, token } = useAuth();
 
     const nombre = user?.nombre || "Usuario";
@@ -18,7 +25,7 @@ const Home = () => {
     //Se importa la lógica del hook
     const {
         titulo, descripcion, pago, ubicacion, categoria, tipoPago,
-        errors, jobs, showModal, closing, opening, loadingJobs,
+        errors, jobs, showModal, closing, loadingJobs,
 
         // setters
         setTitulo, setDescripcion, setPago, setUbicacion, setCategoria, setTipoPago, 
@@ -120,9 +127,15 @@ return (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 lg:gap-30 xl:grid-cols-3 gap-8">
                     {loadingJobs ? (
                         Array.from({ length: 6 }).map((_, i) => (<JobCardSkeleton key={i} />))) : jobs.length === 0 ? (
-                        <p className="text-gray-600 text-lg">
-                            No hay jobs disponibles por ahora...
-                        </p>
+                        <div className="col-span-full">
+                            <EmptyState
+                                title="Aún no hay jobs publicados"
+                                description="Publica el primero y empieza a recibir postulaciones."
+                                icon = {<IoExtensionPuzzleSharp  size={40} className="text-yellow-400" />}
+                                primaryAction={{ label: "Publicar Job", onClick: () => openModal() }}
+                                secondaryAction={{ label: "Ver mis Jobs", onClick: () => navigate("/mis-jobs"), variant: "secondary" }}
+                            />
+                        </div>
                     ) : (
                         jobs.map((job) => (
                             <JobCard 

@@ -1,19 +1,35 @@
 import { useNavigate } from "react-router-dom";
+import { AiFillWarning } from "react-icons/ai";
+import { MdOutlineWorkHistory } from "react-icons/md";
 
+import CreateJobModal from "/src/features/home/layouts/CreateJobModal.jsx";
 import JobPublicadoCard from "./misJobs/JobPublicadoCard";
 import JobPostuladoCard from "./misJobs/JobPostuladoCard";
+
 import { useVerMisJobs } from "./hooks/useVerMisJobs";
+import { useCreateJob } from "../home/hooks/useCreateJob.js";
 
 //Importación de componentes
 import JobPublicadoSkeleton from "../../components/loaders/JobPublicadoSkeleton";
 import JobPostuladoSkeleton from "../../components/loaders/JobPostuladoSkeleton";
 import Header from "../../components/layout/header.jsx";
-import Button from "../../components/ui/button.jsx";
+import Button from "../../components/ui/Button.jsx";
+import EmptyState from "../../components/ui/states/EmptyState.jsx";
 
 const VerMisJobs = () => {
     
     const navigate = useNavigate(); 
     
+    //Se importa la lógica del hook
+    const {
+        titulo, descripcion, pago, ubicacion, categoria, tipoPago,
+        errors, showModal, closing, 
+
+        // setters
+        setTitulo, setDescripcion, setPago, setUbicacion, setCategoria, setTipoPago, 
+        handleCreateJob, closeModal, openModal
+    } = useCreateJob();
+
     const {
         misJobs,
         jobsTomados,
@@ -84,9 +100,14 @@ return (
                             <JobPublicadoSkeleton key={i} />
                         ))
                         ) : misJobs.length === 0 ? (
-                            <p className="text-black text-center text-base sm:text-lg">
-                                Aún no has publicado ningún Job 📝
-                            </p>
+                            <EmptyState
+                                title="Aún no has publicado ningún Job"
+                                description="Publica tu primer Job y empieza a recibir ayuda de otros estudiantes."
+                                icon = {<AiFillWarning  size={40} className="text-yellow-400" />}
+                                primaryAction={{ label: "Publicar Job", onClick: () => openModal(true) }}
+                                secondaryAction={{ label: "Explorar", onClick: () => navigate("/home"), variant: "secondary" }}
+                            />
+
                         ) : (
                             misJobs.map((job) => (
                                 <JobPublicadoCard key={job.id} job={job} onDelete={handleDeleteJob}/>
@@ -102,9 +123,12 @@ return (
                             <JobPostuladoSkeleton key={i} />
                         ))
                         ) : jobsTomados.length === 0 ? (
-                            <p className="text-black text-center text-base sm:text-lg">
-                                Aún no has tomado ningún Job 💼
-                            </p>
+                            <EmptyState
+                                title="Aún no te has postulado a ningún Job"
+                                description="Explora los Jobs disponibles y postúlate al que más te interese para ganar dinero."
+                                icon = {<MdOutlineWorkHistory size={40} className="text-[#8B4513]" />}
+                                primaryAction={{ label: "Explorar", onClick: () => navigate("/home"), variant: "secondary" }}
+                            />
                         ) : (
                             jobsTomados.map((job) => (
                                 <JobPostuladoCard
@@ -120,16 +144,34 @@ return (
                 </div>
             </div>
 
-            <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => navigate("/home")}
-                >
-                Volver
-            </Button>
-            
+            <div className="max-w-6xl mx-auto px-4 pb-10">
+                <Button variant="secondary" size="sm" className="-ml-90" onClick={() => navigate("/home")}>
+                    Volver
+                </Button>
+            </div>
         </div> {/* Fin apartado de los Jobs */}
         
+        <CreateJobModal
+            show={showModal}
+            closing={closing}
+            closeModal={closeModal}
+            handleCreateJob={handleCreateJob}
+    
+            titulo={titulo}
+            setTitulo={setTitulo}
+            descripcion={descripcion}
+            setDescripcion={setDescripcion}
+            pago={pago}
+            setPago={setPago}
+            ubicacion={ubicacion}
+            setUbicacion={setUbicacion}
+            categoria={categoria}
+            setCategoria={setCategoria}
+            tipoPago={tipoPago}
+            setTipoPago={setTipoPago}
+    
+            errors={errors}
+        />
     </>
     )
     }
