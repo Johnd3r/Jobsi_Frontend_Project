@@ -1,6 +1,6 @@
 import { FiX } from "react-icons/fi";
 
-import Button from "../../../components/ui/button.jsx";
+import Button from "../../../components/ui/Button.jsx";
 
 const CreateJobModal = ({
     show,
