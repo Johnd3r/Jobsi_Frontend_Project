@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { AiFillWarning } from "react-icons/ai";
 import { MdOutlineWorkHistory } from "react-icons/md";
 
@@ -8,6 +9,7 @@ import JobPostuladoCard from "./misJobs/JobPostuladoCard";
 
 import { useVerMisJobs } from "./hooks/useVerMisJobs";
 import { useCreateJob } from "../home/hooks/useCreateJob.js";
+import { useModalState } from "../../components/ui/modals/hooks/useModalState.js";
 
 //Importación de componentes
 import JobPublicadoSkeleton from "../../components/loaders/JobPublicadoSkeleton";
@@ -15,11 +17,24 @@ import JobPostuladoSkeleton from "../../components/loaders/JobPostuladoSkeleton"
 import Header from "../../components/layout/header.jsx";
 import Button from "../../components/ui/Button.jsx";
 import EmptyState from "../../components/ui/states/EmptyState.jsx";
+import ErrorBackendModal from "../../components/ui/modals/ErrorBackendModal.jsx";
 
 const VerMisJobs = () => {
     
     const navigate = useNavigate(); 
     
+    const { isOpen: isOpenError, closing: closingError, opening: openingError, 
+        openModal: openModalError, closeModal: closeModalError } = useModalState();
+
+    const [errorCode, setErrorCode] = useState(null);
+
+    const handleAbandonarConError = async (jobId) => {
+        const code = await handleAbandonarJob(jobId);
+        if (code) {
+            setErrorCode(code);
+            openModalError();
+        }
+    };
     //Se importa la lógica del hook
     const {
         titulo, descripcion, pago, ubicacion, categoria, tipoPago,
@@ -36,6 +51,7 @@ const VerMisJobs = () => {
         activeTab,
         loadingPublicados,
         loadingPostulados,
+        agregarJob,
         setActiveTab,
         handleDeleteJob,
         handleAbandonarJob,
@@ -134,29 +150,37 @@ return (
                                 <JobPostuladoCard
                                     key={job.id}
                                     job={job}
-                                    onAbandoned={handleAbandonarJob}
+                                    onAbandoned={handleAbandonarConError}
                                 />
                             ))
                         )}
                     </>
                 )}
-
                 </div>
             </div>
 
             <div className="max-w-6xl mx-auto px-4 pb-10">
-                <Button variant="secondary" size="sm" className="-ml-90" onClick={() => navigate("/home")}>
+                <Button variant="secondary" size="sm" className=" lg:-ml-90" onClick={() => navigate("/home")}>
                     Volver
                 </Button>
             </div>
         </div> {/* Fin apartado de los Jobs */}
         
+        <ErrorBackendModal
+            isOpen={isOpenError}
+            onClose={closeModalError}
+            closing={closingError}
+            opening={openingError}
+            errorCode={errorCode}
+            primaryAction={{ label: "Entendido", onClick: closeModalError }}
+        />
+
         <CreateJobModal
             show={showModal}
             closing={closing}
             closeModal={closeModal}
-            handleCreateJob={handleCreateJob}
-    
+            handleCreateJob={(e) => handleCreateJob(e, agregarJob)}    
+            
             titulo={titulo}
             setTitulo={setTitulo}
             descripcion={descripcion}

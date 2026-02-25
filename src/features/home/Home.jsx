@@ -1,7 +1,7 @@
 import { useAuth } from "/src/context/AuthContext.jsx";
 import { useCreateJob } from "./hooks/useCreateJob";
 import { useNavigate } from "react-router-dom";
-
+import { useModalState } from "../../components/ui/modals/hooks/useModalState.js";
 import { IoExtensionPuzzleSharp } from "react-icons/io5";
 
 import JobCard from "/src/features/home/JobCard.jsx";
@@ -11,7 +11,7 @@ import JobCardSkeleton from "../../components/loaders/JobCardSkeleton.jsx";
 import Header from "../../components/layout/header.jsx";
 import Button from "../../components/ui/Button.jsx";
 import EmptyState from "../../components/ui/states/EmptyState.jsx";
-
+import ComingSoonModal from "../../components/ui/modals/ComingSoonModal.jsx";
 
 const Home = () => {
 
@@ -19,21 +19,28 @@ const Home = () => {
     
     const { user, token } = useAuth();
 
+    const { 
+        isOpen: isOpenComingSoon, closing: closingComingSoon, 
+        opening: openingComingSoon, openModal: openComingSoon, 
+        closeModal: closeComingSoon 
+    } = useModalState(); // → para ComingSoonModal
+
     const nombre = user?.nombre || "Usuario";
     const genero = user?.genero;
 
     //Se importa la lógica del hook
     const {
         titulo, descripcion, pago, ubicacion, categoria, tipoPago,
-        errors, jobs, showModal, closing, loadingJobs,
+        errors, jobs, showModal, isOpen, opening, closing, loadingJobs, 
 
         // setters
         setTitulo, setDescripcion, setPago, setUbicacion, setCategoria, setTipoPago, 
         handleCreateJob, handleTomarJob, closeModal, openModal
-    } = useCreateJob();
+    } = useCreateJob(); // → para CreateJobModal
     
 return (
     <>
+
     {/* Header */}
     <div>
         <Header />
@@ -57,6 +64,7 @@ return (
             <Button
                 variant="warning"
                 size="xl"
+                onClick={openComingSoon}
                 >
                 ¡Explora los Jobs Ahora!
             </Button>
@@ -170,6 +178,17 @@ return (
             </div>
         </div>
     </div>
+
+    <ComingSoonModal
+        isOpen={isOpenComingSoon}
+        onClose={closeComingSoon}
+        closing={closingComingSoon}
+        opening={openingComingSoon}
+        primaryAction={{
+            label: "Entendido",
+            onClick: closeComingSoon
+        }}
+    />
 
     <CreateJobModal
         show={showModal}
